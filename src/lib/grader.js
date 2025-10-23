@@ -8,7 +8,7 @@ export async function initPyodide() {
 
   // CDNからPyodideを読み込み
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+  script.src = 'https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js';
   document.head.appendChild(script);
 
   await new Promise((resolve) => {
@@ -16,7 +16,7 @@ export async function initPyodide() {
   });
 
   pyodide = await loadPyodide({
-    indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+    indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.29.0/full/'
   });
 
   return pyodide;
