@@ -2,39 +2,43 @@ lectureNumber: 7
 slug: 07-data-structures
 title: データ構造
 
+# 共通のpreCodeをアンカーとして定義
+_anchors:
+  - &download-alice |
+      import zipfile, nltk, io
+      from pyodide.http import pyfetch
+      from pathlib import Path
+
+      async def download_gutenberg():
+          # Fetch the Gutenberg corpus ZIP from NLTK's GitHub mirror
+          url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip"
+          response = await pyfetch(url)
+          data = await response.bytes()
+
+          # Prepare destination inside Pyodide's virtual filesystem
+          nltk_data_dir = Path("/nltk_data/corpora")
+          nltk_data_dir.mkdir(parents=True, exist_ok=True)
+
+          # Unpack the corpus directly to corpora directory
+          with zipfile.ZipFile(io.BytesIO(data), "r") as zf:
+              zf.extractall(nltk_data_dir)
+
+      # Run in an async environment
+      await download_gutenberg()
+
+      # Add path and import corpus
+      nltk.data.path.append("/nltk_data")
+      from nltk.corpus import gutenberg
+
+      alice = nltk.text.Text(gutenberg.words('carroll-alice.txt'))
+
 assignments:
   - id: alice-count
     title: '課題1: "Alice" の出現回数'
     packages: ["nltk"]
     tests:
-      - preCode: |
-          import zipfile, nltk, io
-          from pyodide.http import pyfetch
-          from pathlib import Path
-
-          async def download_gutenberg():
-              # Fetch the Gutenberg corpus ZIP from NLTK's GitHub mirror
-              url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip"
-              response = await pyfetch(url)
-              data = await response.bytes()
-
-              # Prepare destination inside Pyodide's virtual filesystem
-              nltk_data_dir = Path("/nltk_data/corpora")
-              nltk_data_dir.mkdir(parents=True, exist_ok=True)
-
-              # Unpack the corpus directly to corpora directory
-              with zipfile.ZipFile(io.BytesIO(data), "r") as zf:
-                  zf.extractall(nltk_data_dir)
-
-          # Run in an async environment
-          await download_gutenberg()
-
-          # Add path and import corpus
-          nltk.data.path.append("/nltk_data")
-          from nltk.corpus import gutenberg
-
-          alice = nltk.text.Text(gutenberg.words('carroll-alice.txt'))
-
+      - preCodes:
+        - *download-alice
         expected: |
           396
 
@@ -42,70 +46,24 @@ assignments:
     title: '課題2: 特定のアルファベットの出現回数'
     packages: ["nltk"]
     tests:
-      - preCode: |
-          import zipfile, nltk, io
-          from pyodide.http import pyfetch
-          from pathlib import Path
-
-          async def download_gutenberg():
-              # Fetch the Gutenberg corpus ZIP from NLTK's GitHub mirror
-              url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip"
-              response = await pyfetch(url)
-              data = await response.bytes()
-
-              # Prepare destination inside Pyodide's virtual filesystem
-              nltk_data_dir = Path("/nltk_data/corpora")
-              nltk_data_dir.mkdir(parents=True, exist_ok=True)
-
-              # Unpack the corpus directly to corpora directory
-              with zipfile.ZipFile(io.BytesIO(data), "r") as zf:
-                  zf.extractall(nltk_data_dir)
-
-          # Run in an async environment
-          await download_gutenberg()
-
-          # Add path and import corpus
-          nltk.data.path.append("/nltk_data")
-          from nltk.corpus import gutenberg
-
-          alice = nltk.text.Text(gutenberg.words('carroll-alice.txt'))
-
-          char = "a"
-
+      - preCodes:
+          - *download-alice
+          - |
+            char = "a"
         expected: |
           6608
+      - preCodes:
+          - *download-alice
+          - |
+            char = "b"
+        expected: |
+          660
 
   - id: alice-frequency
     title: '課題3: アルファベット出現頻度トップ10'
     packages: ["nltk"]
     tests:
-      - preCode: |
-          import zipfile, nltk, io
-          from pyodide.http import pyfetch
-          from pathlib import Path
-
-          async def download_gutenberg():
-              # Fetch the Gutenberg corpus ZIP from NLTK's GitHub mirror
-              url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip"
-              response = await pyfetch(url)
-              data = await response.bytes()
-
-              # Prepare destination inside Pyodide's virtual filesystem
-              nltk_data_dir = Path("/nltk_data/corpora")
-              nltk_data_dir.mkdir(parents=True, exist_ok=True)
-
-              # Unpack the corpus directly to corpora directory
-              with zipfile.ZipFile(io.BytesIO(data), "r") as zf:
-                  zf.extractall(nltk_data_dir)
-
-          # Run in an async environment
-          await download_gutenberg()
-
-          # Add path and import corpus
-          nltk.data.path.append("/nltk_data")
-          from nltk.corpus import gutenberg
-
-          alice = nltk.text.Text(gutenberg.words('carroll-alice.txt'))
-
+      - preCodes:
+          - *download-alice
         expected: |
           ['e', 't', 'a', 'o', 'i', 'n', 'h', 's', 'r', 'd']
