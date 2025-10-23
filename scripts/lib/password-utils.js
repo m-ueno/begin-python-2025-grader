@@ -6,7 +6,7 @@ import { createRawPassword, extractPassword } from '../../shared/password-algori
  * assignmentのslugから決定的にパスワードを生成
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
- * @returns {string} - 生成されたパスワード（30文字）
+ * @returns {string} - 生成されたパスワード（50文字）
  */
 export function generatePassword(lectureSlug, assignmentId) {
   const rawPassword = createRawPassword(lectureSlug, assignmentId);

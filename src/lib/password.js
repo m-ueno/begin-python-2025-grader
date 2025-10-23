@@ -7,7 +7,7 @@ import { createRawPassword, extractPassword } from '../../shared/password-algori
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
  * @param {boolean} allPassed - 全テストケースが通ったか
- * @returns {string} - 生成されたパスワード（30文字）
+ * @returns {string} - 生成されたパスワード（50文字）
  */
 export function generatePassword(lectureSlug, assignmentId, allPassed) {
   if (!allPassed) {
