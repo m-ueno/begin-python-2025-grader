@@ -5,6 +5,7 @@
 
   let lectures = $state([]);
   let currentLecture = $state(null);
+  let showLectureList = $state(false);
   let isLoading = $state(true);
   let pyodideReady = $state(false);
 
@@ -16,12 +17,14 @@
 
       // URLから講義slugを取得
       const path = window.location.pathname;
-      const slug = path.split('/').filter(Boolean).pop() || 'lecture01-intro';
+      const pathParts = path.split('/').filter(Boolean);
 
-      currentLecture = lectures.find(l => l.slug === slug);
-
-      if (!currentLecture && lectures.length > 0) {
-        currentLecture = lectures[0];
+      // トップページまたは/lecturesの場合は講義一覧を表示
+      if (pathParts.length === 0 || pathParts[0] === 'lectures') {
+        showLectureList = true;
+      } else {
+        const slug = pathParts[pathParts.length - 1];
+        currentLecture = lectures.find(l => l.slug === slug);
       }
     } catch (error) {
       console.error('Failed to load assignments:', error);
@@ -45,34 +48,40 @@
 </script>
 
 <main>
-  <header>
-    <h1>Python Auto Grader</h1>
-    <p>Jupyter Notebookで作成したコードを提出して自動採点</p>
-  </header>
-
   {#if isLoading}
+    <header>
+      <h1>Python自動採点システム</h1>
+    </header>
     <div class="loading">読み込み中...</div>
-  {:else if !currentLecture}
-    <div class="error">講義が見つかりません。</div>
-  {:else}
-    <nav class="lecture-nav">
+  {:else if showLectureList}
+    <header class="header-narrow">
+      <h1>Python自動採点システム</h1>
+    </header>
+    <section class="lecture-list">
       <h2>講義一覧</h2>
       <ul>
         {#each lectures as lecture}
           <li>
-            <button
-              class:active={lecture.slug === currentLecture.slug}
-              onclick={() => navigateToLecture(lecture.slug)}
-            >
+            <a href="/{lecture.slug}">
               第{lecture.lectureNumber}回: {lecture.title}
-            </button>
+            </a>
           </li>
         {/each}
       </ul>
-    </nav>
-
+    </section>
+  {:else if !currentLecture}
+    <header>
+      <h1>Python自動採点システム</h1>
+    </header>
+    <div class="error">講義が見つかりません。</div>
+  {:else}
+    <header>
+      <h1>Python自動採点システム</h1>
+    </header>
     <section class="lecture-content">
-      <h2>{currentLecture.title}</h2>
+      <div class="lecture-header">
+        <h2>第{currentLecture.lectureNumber}回：{currentLecture.title}</h2>
+      </div>
 
       {#if !pyodideReady}
         <div class="warning">
@@ -108,21 +117,20 @@
   header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 30px;
+    padding: 20px 30px;
     border-radius: 8px;
     margin-bottom: 30px;
-    text-align: center;
   }
 
   header h1 {
-    margin: 0 0 10px 0;
-    font-size: 2.5em;
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 600;
   }
 
-  header p {
-    margin: 0;
-    font-size: 1.1em;
-    opacity: 0.9;
+  header.header-narrow {
+    max-width: 600px;
+    margin: 0 auto 30px;
   }
 
   .loading, .error, .warning {
@@ -147,46 +155,47 @@
     color: #e65100;
   }
 
-  .lecture-nav {
+  .lecture-list {
     background: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 8px;
-    margin-bottom: 30px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
   }
 
-  .lecture-nav h2 {
+  .lecture-list h2 {
     margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.3em;
   }
 
-  .lecture-nav ul {
+  .lecture-list ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
   }
 
-  .lecture-nav button {
-    padding: 10px 20px;
-    border: 2px solid #ddd;
-    background: white;
+  .lecture-list li {
+    margin-bottom: 10px;
+  }
+
+  .lecture-list a {
+    display: block;
+    padding: 12px 16px;
+    background: #f8f9fa;
     border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
+    text-decoration: none;
+    color: #333;
     transition: all 0.2s;
+    border-left: 3px solid transparent;
   }
 
-  .lecture-nav button:hover {
-    border-color: #667eea;
-    color: #667eea;
-  }
-
-  .lecture-nav button.active {
-    background: #667eea;
-    color: white;
-    border-color: #667eea;
+  .lecture-list a:hover {
+    background: #e9ecef;
+    border-left-color: #667eea;
+    transform: translateX(4px);
   }
 
   .lecture-content {
@@ -196,11 +205,16 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
-  .lecture-content h2 {
-    margin-top: 0;
-    color: #333;
+  .lecture-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
     border-bottom: 2px solid #667eea;
-    padding-bottom: 10px;
+  }
+
+  .lecture-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.8em;
   }
 
   .assignments {
