@@ -100,7 +100,6 @@
           <div class="password-container">
             <div class="password-label">
               <strong>パスワード:</strong>
-              <span class="password-hint">（50文字）</span>
             </div>
             <div class="password-box">
               <code class="password" id="password-{assignment.id}">{password}</code>
@@ -119,7 +118,7 @@
               </button>
             </div>
           </div>
-          <p class="instruction">コピーボタンを使ってパスワードを確実にコピーし、MOOCに提出してください。</p>
+          <p class="instruction">コピーボタンを使ってパスワードを確実にコピーし、提出してください。</p>
         </div>
       {:else}
         <div class="failure">

@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
  * 課題IDからパスワードを生成
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
- * @returns {string} - 生成されたパスワード（50文字）
+ * @returns {string} - 生成されたパスワード
  */
 function generatePassword(lectureSlug, assignmentId) {
   const rawPassword = createRawPassword(lectureSlug, assignmentId);
@@ -28,7 +28,7 @@ const yamlFiles = fs.readdirSync(assignmentsDir)
 
 console.log('');
 console.log('═══════════════════════════════════════════════════════════');
-console.log('  講師用パスワード一覧 (MOOC登録用)');
+console.log('  講師用パスワード一覧');
 console.log('═══════════════════════════════════════════════════════════');
 console.log('');
 

@@ -1,14 +1,13 @@
 /**
  * パスワード生成アルゴリズム
  * Node.jsとブラウザの両方で使用可能
- * assignmentのslugから決定的に50文字のパスワードを生成
  */
 
 /**
  * assignmentのslugからパスワードを生成
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
- * @returns {string} - 50文字の複雑なパスワード（大文字、小文字、数字、記号を含む）
+ * @returns {string} - パスワード
  */
 export function createRawPassword(lectureSlug, assignmentId) {
   return `${lectureSlug}-${assignmentId}`;
@@ -17,7 +16,7 @@ export function createRawPassword(lectureSlug, assignmentId) {
 /**
  * ハッシュから最終的なパスワードを抽出
  * @param {string} hashHex - SHA256ハッシュの16進数文字列
- * @returns {string} - 50文字のパスワード
+ * @returns {string} - パスワード
  */
 export function extractPassword(hashHex) {
   // 使用する文字セット（視認性の悪い文字は除外）

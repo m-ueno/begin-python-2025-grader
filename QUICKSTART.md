@@ -21,7 +21,7 @@ npm install
 npm run show-passwords
 ```
 
-表示されたパスワードをMOOCシステムに登録してください。
+表示されたパスワードを採点システムに登録してください。
 
 **注**: パスワードはassignmentのslugから自動生成されます。環境変数の設定は不要です。
 
@@ -72,10 +72,10 @@ git push origin main
 ## よくある質問
 
 **Q: パスワードはどのように生成されますか？**
-A: パスワードは各assignmentの `lectureSlug` と `assignmentId` から決定的に生成されます（50文字、大文字小文字数字記号を含む）。同じslugからは常に同じパスワードが生成されます。
+A: パスワードは各assignmentの `lectureSlug` と `assignmentId` から決定的に生成されます。同じslugからは常に同じパスワードが生成されます。
 
 **Q: 新しい課題を追加した**
-A: `npm run show-passwords` で新しい課題のパスワードを確認し、MOOCに登録してください。
+A: `npm run show-passwords` で新しい課題のパスワードを確認し、採点システムに登録してください。
 
 **Q: パスワードを変更したい**
-A: assignmentの `slug` または `id` を変更すると、パスワードが変わります。変更後は必ず `npm run show-passwords` で新しいパスワードを確認し、MOOCに再登録してください。
+A: assignmentの `slug` または `id` を変更すると、パスワードが変わります。変更後は必ず `npm run show-passwords` で新しいパスワードを確認し、採点システムに再登録してください。

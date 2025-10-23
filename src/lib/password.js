@@ -3,11 +3,10 @@ import { createRawPassword, extractPassword } from '../../shared/password-algori
 
 /**
  * 課題IDとテストケース結果からパスワードを生成（ブラウザ環境用）
- * assignmentのslugから決定的にパスワードを生成
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
  * @param {boolean} allPassed - 全テストケースが通ったか
- * @returns {string} - 生成されたパスワード（50文字）
+ * @returns {string} - 生成されたパスワード
  */
 export function generatePassword(lectureSlug, assignmentId, allPassed) {
   if (!allPassed) {
