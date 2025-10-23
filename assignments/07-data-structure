@@ -1,6 +1,6 @@
-lectureNumber: 6
-slug: lecture06-data-structures
-title: 第6回：データ構造
+lectureNumber: 7
+slug: 07-data-structures
+title: データ構造
 
 assignments:
   - id: alice-frequency

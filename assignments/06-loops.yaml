@@ -1,6 +1,6 @@
-lectureNumber: 5
-slug: lecture05-loops
-title: 第5回：繰り返し
+EectureNumber: 6
+slug: 06-loops
+title: 繰り返し
 
 assignments:
   - id: fizzbuzz
@@ -74,6 +74,3 @@ assignments:
           4
           2
           1
-      - preCode: "v = 1"
-        postCode: ""
-        expected: "1"
