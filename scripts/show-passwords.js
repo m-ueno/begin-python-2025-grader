@@ -2,13 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
-import { getEncryptionKey, generatePassword } from './lib/password-utils.js';
+import { generatePassword } from './lib/password-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// 環境変数から暗号化キーを取得
-const ENCRYPTION_KEY = getEncryptionKey();
 
 // assignmentsディレクトリ内のすべてのYAMLファイルを読み込む
 const assignmentsDir = path.join(__dirname, '../assignments');
@@ -33,7 +30,7 @@ for (const file of yamlFiles) {
   console.log('─────────────────────────────────────────────────────────');
 
   for (const assignment of lecture.assignments) {
-    const password = generatePassword(lecture.slug, assignment.id, ENCRYPTION_KEY);
+    const password = generatePassword(lecture.slug, assignment.id);
 
     console.log(`  ${assignment.id.padEnd(25)} → ${password}`);
 

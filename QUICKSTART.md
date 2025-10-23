@@ -15,21 +15,7 @@ cd python-grader-client
 npm install
 ```
 
-### 3. 環境変数を設定
-
-```bash
-cp .env.example .env
-```
-
-`.env` ファイルを開いて、暗号化キーを設定：
-
-```env
-GRADER_ENCRYPTION_KEY=my-unique-secret-key-2024
-```
-
-**重要**: このキーは変更しないでください！パスワードがこのキーから生成されます。
-
-### 4. パスワード一覧を確認
+### 3. パスワード一覧を確認
 
 ```bash
 npm run show-passwords
@@ -37,7 +23,9 @@ npm run show-passwords
 
 表示されたパスワードをMOOCシステムに登録してください。
 
-### 5. 開発サーバーを起動
+**注**: パスワードはassignmentのslugから自動生成されます。環境変数の設定は不要です。
+
+### 4. 開発サーバーを起動
 
 ```bash
 npm run dev
@@ -66,19 +54,12 @@ assignments:
 
 ## GitHub Pagesにデプロイ
 
-### 1. GitHub Secretsに暗号化キーを設定
-
-1. GitHubリポジトリの Settings > Secrets and variables > Actions
-2. "New repository secret" をクリック
-3. 名前: `GRADER_ENCRYPTION_KEY`
-4. 値: `.env` ファイルと同じ値を入力
-
-### 2. GitHub Pagesを有効化
+### 1. GitHub Pagesを有効化
 
 1. Settings > Pages
 2. Source を "GitHub Actions" に設定
 
-### 3. デプロイ
+### 2. デプロイ
 
 ```bash
 git add .
@@ -90,11 +71,11 @@ git push origin main
 
 ## よくある質問
 
-**Q: パスワードを変更したい**
-A: 暗号化キーを変更すると、すべてのパスワードが変わります。変更後は必ず `npm run show-passwords` で新しいパスワードを確認し、MOOCに再登録してください。
+**Q: パスワードはどのように生成されますか？**
+A: パスワードは各assignmentの `lectureSlug` と `assignmentId` から決定的に生成されます（30文字、大文字小文字数字記号を含む）。同じslugからは常に同じパスワードが生成されます。
 
 **Q: 新しい課題を追加した**
 A: `npm run show-passwords` で新しい課題のパスワードを確認し、MOOCに登録してください。
 
-**Q: ビルドエラーが出る**
-A: `GRADER_ENCRYPTION_KEY` 環境変数が設定されているか確認してください。GitHub Actionsの場合は、Secretsに登録されているか確認してください。
+**Q: パスワードを変更したい**
+A: assignmentの `slug` または `id` を変更すると、パスワードが変わります。変更後は必ず `npm run show-passwords` で新しいパスワードを確認し、MOOCに再登録してください。

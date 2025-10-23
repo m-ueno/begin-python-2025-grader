@@ -1,23 +1,21 @@
 import CryptoJS from 'crypto-js';
 import { createRawPassword, extractPassword } from '../../shared/password-algorithm.js';
 
-// ビルド時に生成される暗号化キー（環境変数から注入）
-const ENCRYPTION_KEY = '__ENCRYPTION_KEY__';
-
 /**
  * 課題IDとテストケース結果からパスワードを生成（ブラウザ環境用）
+ * assignmentのslugから決定的にパスワードを生成
  * @param {string} lectureSlug - 講義のslug
  * @param {string} assignmentId - 課題ID
  * @param {boolean} allPassed - 全テストケースが通ったか
- * @returns {string} - 生成されたパスワード
+ * @returns {string} - 生成されたパスワード（30文字）
  */
 export function generatePassword(lectureSlug, assignmentId, allPassed) {
   if (!allPassed) {
     return '';
   }
 
-  // 共通アルゴリズムを使用してパスワード生成
+  // slugから決定的にパスワード生成
   const rawPassword = createRawPassword(lectureSlug, assignmentId);
-  const hashHex = CryptoJS.SHA256(rawPassword + ENCRYPTION_KEY).toString();
+  const hashHex = CryptoJS.SHA256(rawPassword).toString();
   return extractPassword(hashHex);
 }
