@@ -1,0 +1,26 @@
+# 講義メタデータ
+lectureNumber: 1
+slug: lecture01-intro
+title: 第1回：Python入門
+
+# 課題リスト
+assignments:
+  - id: hello-world
+    title: Hello Worldを出力する
+    tests:
+      - preCode: ""
+        postCode: ""
+        expected: "Hello, World!"
+
+  - id: if-statement
+    title: if文を使う
+    tests:
+      - preCode: "x = 10"
+        postCode: ""
+        expected: "positive"
+      - preCode: "x = -5"
+        postCode: ""
+        expected: "negative"
+      - preCode: "x = 0"
+        postCode: ""
+        expected: "zero"

@@ -1,0 +1,43 @@
+# 講義メタデータ
+lectureNumber: 3
+slug: lecture03-data-analysis
+title: 第3回：データ分析基礎
+
+# 課題リスト
+assignments:
+  - id: numpy-std
+    title: NumPyで標準偏差を計算
+    packages: ["numpy"]
+    tests:
+      - preCode: |
+          import numpy as np
+          data = np.array([1, 2, 3, 4, 5])
+        postCode: "print(result)"
+        expected: "1.4142135623730951"
+      - preCode: |
+          import numpy as np
+          data = np.array([10, 20, 30, 40, 50])
+        postCode: "print(result)"
+        expected: "14.142135623730951"
+
+  - id: file-io
+    title: ファイルの読み書き
+    packages: ["numpy"]
+    tests:
+      - preCode: |
+          import numpy as np
+          # sample.txtを作成
+          with open('sample.txt', 'w') as f:
+              f.write('1 2 3 4 5')
+        postCode: |
+          with open('output.txt', 'r') as f:
+              print(f.read().strip())
+        expected: "1.4142135623730951"
+
+  - id: word-frequency
+    title: テキストから頻出単語を抽出
+    tests:
+      - preCode: |
+          text = "the quick brown fox jumps over the lazy dog the fox"
+        postCode: ""
+        expected: "the: 3\nfox: 2"

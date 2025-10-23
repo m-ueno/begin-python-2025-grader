@@ -1,0 +1,21 @@
+{
+  "name": "python-grader-client",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run generate-passwords && npm run build-assignments && vite build",
+    "preview": "vite preview",
+    "generate-passwords": "node scripts/generate-passwords.js",
+    "build-assignments": "node scripts/build-assignments.js"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "js-yaml": "^4.1.0",
+    "svelte": "^5.41.2",
+    "vite": "^7.1.11"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}

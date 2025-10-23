@@ -1,0 +1,32 @@
+# 講義メタデータ
+lectureNumber: 2
+slug: lecture02-functions
+title: 第2回：関数とアルゴリズム
+
+# 課題リスト
+assignments:
+  - id: reverse-recursive
+    title: 再帰関数でリスト反転
+    tests:
+      - preCode: ""
+        postCode: "print(reverse([1, 2, 3, 4, 5]))"
+        expected: "[5, 4, 3, 2, 1]"
+      - preCode: ""
+        postCode: "print(reverse([]))"
+        expected: "[]"
+      - preCode: ""
+        postCode: "print(reverse([1]))"
+        expected: "[1]"
+
+  - id: quicksort
+    title: クイックソート実装
+    tests:
+      - preCode: ""
+        postCode: "print(quicksort([3, 1, 4, 1, 5, 9, 2, 6]))"
+        expected: "[1, 1, 2, 3, 4, 5, 6, 9]"
+      - preCode: ""
+        postCode: "print(quicksort([]))"
+        expected: "[]"
+      - preCode: ""
+        postCode: "print(quicksort([5, 4, 3, 2, 1]))"
+        expected: "[1, 2, 3, 4, 5]"
