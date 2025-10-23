@@ -1,10 +1,18 @@
-# 講義メタデータ
-lectureNumber: 2
-slug: lecture02-functions
-title: 第2回：関数とアルゴリズム
+lectureNumber: 8
+slug: 08-recursion
+title: アルゴリズム：再帰
 
-# 課題リスト
 assignments:
+  - id: fibonacci-recursive
+    title: フィボナッチ（末尾再帰）
+    tests:
+      - postCode: "print(fibonacci(1))"
+        expected: "1"
+      - postCode: "print(fibonacci(2))"
+        expected: "1"
+      - postCode: "print(fibonacci(10))"
+        expected: "54"
+
   - id: reverse-recursive
     title: 再帰関数でリスト反転
     tests:
