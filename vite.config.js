@@ -9,5 +9,8 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['pyodide']
+  },
+  worker: {
+    format: 'iife' // importScriptsを使うため、Classic Worker形式
   }
 });
