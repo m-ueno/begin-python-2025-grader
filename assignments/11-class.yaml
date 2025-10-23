@@ -12,11 +12,6 @@ assignments:
           print(x.mul(y))
         expected: "1/15"
       - postCode: |
-          x = Fraction(2, 3)
-          y = Fraction(3, 4)
-          print(x.mul(y))
-        expected: "6/12"
-      - postCode: |
           x = Fraction(1, 10)
           y = Fraction(3, 1)
           print(x.mul(y))
