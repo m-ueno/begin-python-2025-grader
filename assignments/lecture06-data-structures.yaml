@@ -1,0 +1,50 @@
+lectureNumber: 6
+slug: lecture06-data-structures
+title: 第6回：データ構造
+
+assignments:
+  - id: alice-frequency
+    title: 『不思議の国のアリス』のアルファベット出現頻度
+    packages: ["nltk"]
+    tests:
+      - preCode: |
+          import zipfile, nltk, io
+          from pyodide.http import pyfetch
+          from pathlib import Path
+
+          async def download_gutenberg():
+              # Fetch the Gutenberg corpus ZIP from NLTK's GitHub mirror
+              url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/gutenberg.zip"
+              response = await pyfetch(url)
+              data = await response.bytes()
+
+              # Prepare destination inside Pyodide's virtual filesystem
+              nltk_data_dir = Path("/nltk_data/corpora")
+              nltk_data_dir.mkdir(parents=True, exist_ok=True)
+
+              # Unpack the corpus directly to corpora directory
+              with zipfile.ZipFile(io.BytesIO(data), "r") as zf:
+                  zf.extractall(nltk_data_dir)
+
+          # Run in an async environment
+          await download_gutenberg()
+
+          # Add path and import corpus
+          nltk.data.path.append("/nltk_data")
+          from nltk.corpus import gutenberg
+
+          alice = nltk.text.Text(gutenberg.words('carroll-alice.txt'))
+
+        postCode: |
+          # 結果を確認（上位5文字を出力）
+          import json
+          if isinstance(result, dict):
+              sorted_result = sorted(result.items(), key=lambda x: x[1], reverse=True)[:5]
+              for char, count in sorted_result:
+                  print(f"{char}: {count}")
+        expected: |
+          e: 10572
+          t: 7253
+          a: 6608
+          o: 6344
+          i: 5480
