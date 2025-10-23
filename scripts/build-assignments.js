@@ -84,7 +84,11 @@ for (const file of yamlFiles) {
   }
 }
 
-// JSONとして出力
+// JSONとして出力（ディレクトリが存在しない場合は作成）
+const outputDir = path.dirname(outputPath);
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
 fs.writeFileSync(outputPath, JSON.stringify(lectures, null, 2));
 
 console.log(`\n✅ Successfully built ${lectures.length} lectures`);
