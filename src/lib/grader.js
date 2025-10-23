@@ -56,15 +56,8 @@ sys.stdout = StringIO()
 sys.stderr = StringIO()
       `);
 
-      // 仮想ファイルシステムのリセット
-      try {
-        pyodide.FS.unmount('/tmp');
-      } catch (e) {
-        // /tmpがマウントされていない場合は無視
-      }
-      pyodide.FS.mkdir('/tmp');
-      pyodide.FS.mount(pyodide.FS.filesystems.MEMFS, {}, '/tmp');
-      pyodide.FS.chdir('/tmp');
+      // ファイルシステムの簡易セットアップ
+      // Pyodideはデフォルトで/home/pyodideを作業ディレクトリとして持っている
 
       // preCode, userCode, postCodeを順に実行
       const fullCode = `${test.preCode}\n${userCode}\n${test.postCode}`;

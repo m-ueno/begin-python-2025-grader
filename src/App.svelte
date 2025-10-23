@@ -3,15 +3,15 @@
   import AssignmentForm from './components/AssignmentForm.svelte';
   import { initPyodide } from './lib/grader.js';
 
-  let lectures = [];
-  let currentLecture = null;
-  let isLoading = true;
-  let pyodideReady = false;
+  let lectures = $state([]);
+  let currentLecture = $state(null);
+  let isLoading = $state(true);
+  let pyodideReady = $state(false);
 
   onMount(async () => {
     // 講義データを読み込み（ビルド時に生成されたJSON）
     try {
-      const response = await fetch('/assignments.json');
+      const response = await fetch('/python-grader-client/assignments.json');
       lectures = await response.json();
 
       // URLから講義slugを取得
@@ -62,7 +62,7 @@
           <li>
             <button
               class:active={lecture.slug === currentLecture.slug}
-              on:click={() => navigateToLecture(lecture.slug)}
+              onclick={() => navigateToLecture(lecture.slug)}
             >
               第{lecture.lectureNumber}回: {lecture.title}
             </button>

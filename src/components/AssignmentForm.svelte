@@ -2,14 +2,13 @@
   import { runTests } from '../lib/grader.js';
   import { generatePassword } from '../lib/password.js';
 
-  export let assignment;
-  export let lectureSlug;
+  let { assignment, lectureSlug } = $props();
 
-  let userCode = '';
-  let isRunning = false;
-  let isLoadingPackages = false;
-  let testResults = null;
-  let password = '';
+  let userCode = $state('');
+  let isRunning = $state(false);
+  let isLoadingPackages = $state(false);
+  let testResults = $state(null);
+  let password = $state('');
 
   async function handleSubmit() {
     isRunning = true;
@@ -62,7 +61,7 @@
     ></textarea>
   </div>
 
-  <button on:click={handleSubmit} disabled={isRunning || !userCode.trim()}>
+  <button onclick={handleSubmit} disabled={isRunning || !userCode.trim()}>
     {isRunning ? '実行中...' : 'テスト実行'}
   </button>
 
