@@ -122,7 +122,7 @@
     margin: 0 auto 30px;
   }
 
-  .loading, .error, .warning {
+  .loading, .warning {
     text-align: center;
     padding: 20px;
     border-radius: 4px;
@@ -132,11 +132,6 @@
   .loading {
     background: #e3f2fd;
     color: #1976d2;
-  }
-
-  .error {
-    background: #ffebee;
-    color: #c62828;
   }
 
   .warning {
