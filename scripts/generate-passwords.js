@@ -1,15 +1,15 @@
-import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getEncryptionKey } from './lib/password-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ランダムな暗号化キーを生成
-const encryptionKey = crypto.randomBytes(32).toString('hex');
+// 環境変数から暗号化キーを取得
+const encryptionKey = getEncryptionKey();
 
-console.log('🔑 Generating encryption key...');
+console.log('🔑 Using encryption key from environment variable');
 
 // password.jsファイルを読み込み、プレースホルダーを置換
 const passwordLibPath = path.join(__dirname, '../src/lib/password.js');
@@ -24,10 +24,4 @@ passwordLibContent = passwordLibContent.replace(
 const tempPath = path.join(__dirname, '../src/lib/password.generated.js');
 fs.writeFileSync(tempPath, passwordLibContent);
 
-console.log('✅ Encryption key generated and injected');
-
-// 環境変数にも保存（他のスクリプトで使用可能に）
-fs.writeFileSync(
-  path.join(__dirname, '../.encryption-key'),
-  encryptionKey
-);
+console.log('✅ Encryption key injected into build');

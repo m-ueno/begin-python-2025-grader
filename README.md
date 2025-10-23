@@ -12,9 +12,30 @@
 
 ## セットアップ
 
+### 1. 依存関係のインストール
+
 ```bash
 npm install
 ```
+
+### 2. 環境変数の設定
+
+`.env` ファイルを作成し、暗号化キーを設定します：
+
+```bash
+cp .env.example .env
+```
+
+`.env` ファイルを編集して、`GRADER_ENCRYPTION_KEY` を設定してください：
+
+```env
+GRADER_ENCRYPTION_KEY=your-secret-key-here-do-not-change
+```
+
+**重要**:
+- 本番環境では必ず独自の暗号化キーに変更してください
+- 一度設定したら変更しないでください（パスワードが変わってしまいます）
+- `.env` ファイルは `.gitignore` に含まれており、Gitにコミットされません
 
 ## 開発
 
@@ -90,6 +111,29 @@ Pyodideが対応している主要なパッケージ：
 
 **注意**: パッケージの初回読み込みには時間がかかる場合があります（特にnumpyやpandasは数MB〜数十MBあるため）。
 
+## 講師用：パスワードの確認
+
+学生が課題をクリアすると表示されるパスワードの一覧を確認できます。
+
+```bash
+npm run show-passwords
+```
+
+ターミナルに全課題のパスワード一覧が表示されます。
+
+### パスワードの使い方
+
+1. `.env` ファイルで `GRADER_ENCRYPTION_KEY` を設定
+2. `npm run show-passwords` を実行してパスワード一覧を確認
+3. 表示されたパスワードをMOOCの採点システムに登録
+4. 学生は課題をクリアするとパスワードを取得
+5. 学生がMOOCにパスワードを提出することで採点完了
+
+**重要**:
+- パスワードは暗号化キーによって決まります
+- 同じ暗号化キーを使えば、何度ビルドしても同じパスワードが生成されます
+- 初回セットアップ時に一度パスワードをMOOCに登録すれば、以降は変更不要です
+
 ## ビルド
 
 ```bash
@@ -102,10 +146,17 @@ npm run build
 
 GitHub Pagesへの自動デプロイが設定されています。
 
+### デプロイ手順
+
 1. GitHubリポジトリを作成
-2. コードをpush
-3. リポジトリの Settings > Pages で Source を "GitHub Actions" に設定
-4. `main` ブランチにpushすると自動デプロイされます
+2. リポジトリの Settings > Secrets and variables > Actions に移動
+3. "New repository secret" をクリック
+4. `GRADER_ENCRYPTION_KEY` という名前で、`.env` と同じ暗号化キーを設定
+5. コードをpush
+6. リポジトリの Settings > Pages で Source を "GitHub Actions" に設定
+7. `main` ブランチにpushすると自動デプロイされます
+
+**重要**: GitHub Secretsに設定する `GRADER_ENCRYPTION_KEY` は、ローカルの `.env` ファイルと同じ値にしてください。異なる値を設定すると、異なるパスワードが生成されてしまいます。
 
 ### ベースパスの設定
 

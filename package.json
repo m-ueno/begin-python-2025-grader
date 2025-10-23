@@ -7,7 +7,8 @@
     "build": "npm run generate-passwords && npm run build-assignments && vite build",
     "preview": "vite preview",
     "generate-passwords": "node scripts/generate-passwords.js",
-    "build-assignments": "node scripts/build-assignments.js"
+    "build-assignments": "node scripts/build-assignments.js",
+    "show-passwords": "npm run generate-passwords && node scripts/show-passwords.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",

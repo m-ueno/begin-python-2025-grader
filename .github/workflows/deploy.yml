@@ -33,6 +33,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          GRADER_ENCRYPTION_KEY: ${{ secrets.GRADER_ENCRYPTION_KEY }}
         run: npm run build
 
       - name: Upload artifact
