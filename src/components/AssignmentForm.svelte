@@ -9,11 +9,28 @@
   let isLoadingPackages = $state(false);
   let testResults = $state(null);
   let password = $state('');
+  let copyStatus = $state(''); // 'success' or 'error'
+
+  async function copyPassword() {
+    try {
+      await navigator.clipboard.writeText(password);
+      copyStatus = 'success';
+      setTimeout(() => {
+        copyStatus = '';
+      }, 2000);
+    } catch (error) {
+      copyStatus = 'error';
+      setTimeout(() => {
+        copyStatus = '';
+      }, 2000);
+    }
+  }
 
   async function handleSubmit() {
     isRunning = true;
     testResults = null;
     password = '';
+    copyStatus = '';
 
     try {
       const packages = assignment.packages || [];
@@ -80,11 +97,29 @@
       {#if testResults.allPassed}
         <div class="success">
           <p>✅ すべてのテストが合格しました！</p>
-          <div class="password-display">
-            <strong>パスワード:</strong>
-            <code class="password">{password}</code>
+          <div class="password-container">
+            <div class="password-label">
+              <strong>パスワード:</strong>
+              <span class="password-hint">（50文字）</span>
+            </div>
+            <div class="password-box">
+              <code class="password" id="password-{assignment.id}">{password}</code>
+              <button
+                class="copy-button {copyStatus}"
+                onclick={copyPassword}
+                type="button"
+              >
+                {#if copyStatus === 'success'}
+                  ✓ コピーしました
+                {:else if copyStatus === 'error'}
+                  ✗ コピー失敗
+                {:else}
+                  📋 コピー
+                {/if}
+              </button>
+            </div>
           </div>
-          <p class="instruction">このパスワードをMOOCに提出してください。</p>
+          <p class="instruction">コピーボタンを使ってパスワードを確実にコピーし、MOOCに提出してください。</p>
         </div>
       {:else}
         <div class="failure">
@@ -199,23 +234,97 @@
     color: #dc3545;
   }
 
-  .password-display {
+  .password-container {
     margin: 15px 0;
-    padding: 15px;
+    padding: 20px;
     background: #e7f3ff;
-    border-left: 4px solid #007bff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+  }
+
+  .password-label {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .password-hint {
+    font-size: 12px;
+    color: #666;
+    font-weight: normal;
+  }
+
+  .password-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .password {
-    font-size: 24px;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 18px;
     font-weight: bold;
     color: #007bff;
-    padding: 5px 10px;
+    padding: 12px 16px;
     background: white;
-    border: 2px solid #007bff;
-    border-radius: 4px;
+    border: 3px solid #007bff;
+    border-radius: 6px;
     display: inline-block;
-    margin-left: 10px;
+    letter-spacing: 1px;
+    word-break: break-all;
+    user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .copy-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 140px;
+  }
+
+  .copy-button:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  }
+
+  .copy-button:active {
+    transform: translateY(0);
+  }
+
+  .copy-button.success {
+    background-color: #155724;
+    animation: pulse 0.5s ease;
+  }
+
+  .copy-button.error {
+    background-color: #dc3545;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .instruction {
