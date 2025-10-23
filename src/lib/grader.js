@@ -83,12 +83,42 @@ sys.stderr = StringIO()
       });
 
     } catch (error) {
+      // Pythonのエラーメッセージを取得
+      let errorMessage = '';
+
+      // Pyodideのエラーには複数のプロパティがある可能性がある
+      // error.message, error.toString(), errorオブジェクト全体を確認
+      console.error('Caught error:', error);
+      console.error('Error message:', error.message);
+      console.error('Error type:', typeof error);
+
+      // まずerror.messageを使用
+      if (error.message) {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      } else {
+        errorMessage = String(error);
+      }
+
+      // stderrも取得を試みる（Pythonのトレースバックはstderrに出力される）
+      try {
+        const stderr = await pyodide.runPythonAsync('sys.stderr.getvalue()');
+        if (stderr && stderr.trim()) {
+          // stderrに内容があればそれを優先
+          errorMessage = stderr.trim();
+        }
+      } catch (e) {
+        // stderr取得に失敗しても続行
+        console.error('Failed to get stderr:', e);
+      }
+
       results.push({
         testIndex: i,
         passed: false,
         expected: test.expected.trim(),
         actual: '',
-        error: error.message
+        error: errorMessage || 'エラーが発生しました（詳細不明）'
       });
     }
   }

@@ -74,9 +74,13 @@ for (const file of yamlFiles) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error(`❌ Schema validation error in ${file}:`);
-      error.errors.forEach(err => {
-        console.error(`  - ${err.path.join('.')}: ${err.message}`);
-      });
+      if (error.errors && Array.isArray(error.errors)) {
+        error.errors.forEach(err => {
+          console.error(`  - ${err.path.join('.')}: ${err.message}`);
+        });
+      } else {
+        console.error(error.message);
+      }
     } else {
       console.error(`❌ Error parsing ${file}:`, error.message);
     }

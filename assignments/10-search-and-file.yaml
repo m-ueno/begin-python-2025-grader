@@ -1,0 +1,44 @@
+lectureNumber: 10
+slug: 10-search-and-file
+title: 検索とファイル操作
+
+assignments:
+  - id: std-deviation-to-file
+    title: スコアの標準偏差を求めてファイルに出力
+    tests:
+      - preCode: |
+          import os
+          # sample.txtの準備
+          os.makedirs('/content/drive/MyDrive', exist_ok=True)
+          with open('/content/drive/MyDrive/sample.txt', 'w') as f:
+              f.write('8 7 9 6 9\n')
+              f.write('4 5 8 7 6\n')
+              f.write('9 9 9 8 9\n')
+              f.write('6 7 9 7 8\n')
+
+          # dataを読み込む
+          with open('/content/drive/MyDrive/sample.txt') as f:
+              lines = f.readlines()
+
+          data = []
+          for line in lines:
+              lst = [int(s) for s in line.split()]
+              data.append(lst)
+        postCode: |
+          # sample_std.txtの内容を読み込んで出力（四捨五入なしバージョンも許容）
+          import os
+          with open('/content/drive/MyDrive/sample_std.txt') as f:
+              lines = f.readlines()
+
+          # 各行の数値を読み取る
+          import numpy as np
+          expected_data = [[8, 7, 9, 6, 9], [4, 5, 8, 7, 6], [9, 9, 9, 8, 9], [6, 7, 9, 7, 8]]
+
+          for i, line in enumerate(lines):
+              value = float(line.strip())
+              actual_std = np.std(expected_data[i])
+              # 許容範囲: 0.01以内
+              assert abs(value - actual_std) < 0.01, f"Line {i+1}: expected around {actual_std}, got {value}"
+
+          print("OK")
+        expected: "OK"

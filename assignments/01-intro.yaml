@@ -5,7 +5,7 @@ title: Pythonの基礎1
 # 課題リスト
 assignments:
   - id: hello-world
-    title: Hello Worldを出力する
+    title: "'Hello, World!'を出力する"
     tests:
       - preCode: ""
         postCode: ""

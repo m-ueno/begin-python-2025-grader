@@ -11,10 +11,15 @@ assignments:
       - postCode: "print(fibonacci(2))"
         expected: "1"
       - postCode: "print(fibonacci(10))"
-        expected: "54"
+        expected: "55"
+      - postCode: "print(fibonacci(30))"
+        expected: "832040"
+      - postCode: |
+          assert fibonacci(1, 1, 1) == 1
+        expected: ""
 
   - id: reverse-recursive
-    title: 再帰関数でリスト反転
+    title: リスト反転再帰関数
     tests:
       - preCode: ""
         postCode: "print(reverse([1, 2, 3, 4, 5]))"
@@ -25,16 +30,3 @@ assignments:
       - preCode: ""
         postCode: "print(reverse([1]))"
         expected: "[1]"
-
-  - id: quicksort
-    title: クイックソート実装
-    tests:
-      - preCode: ""
-        postCode: "print(quicksort([3, 1, 4, 1, 5, 9, 2, 6]))"
-        expected: "[1, 1, 2, 3, 4, 5, 6, 9]"
-      - preCode: ""
-        postCode: "print(quicksort([]))"
-        expected: "[]"
-      - preCode: ""
-        postCode: "print(quicksort([5, 4, 3, 2, 1]))"
-        expected: "[1, 2, 3, 4, 5]"
