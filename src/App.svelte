@@ -104,7 +104,7 @@
   }
 
   header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #1a73e8;
     color: white;
     padding: 20px 30px;
     border-radius: 8px;
@@ -130,13 +130,15 @@
   }
 
   .loading {
-    background: #e3f2fd;
-    color: #1976d2;
+    background: #f5f5f5;
+    color: #5f6368;
+    border: 1px solid #dadce0;
   }
 
   .warning {
-    background: #fff3e0;
-    color: #e65100;
+    background: #f5f5f5;
+    color: #5f6368;
+    border: 1px solid #dadce0;
   }
 
   .lecture-list {
@@ -178,7 +180,7 @@
 
   .lecture-list a:hover {
     background: #e9ecef;
-    border-left-color: #667eea;
+    border-left-color: #1a73e8;
     transform: translateX(4px);
   }
 
@@ -192,7 +194,7 @@
   .lecture-header {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #667eea;
+    border-bottom: 2px solid #dadce0;
   }
 
   .lecture-header h2 {

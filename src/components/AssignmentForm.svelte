@@ -191,30 +191,32 @@
   }
 
   button {
-    background-color: #007bff;
+    background-color: #1a73e8;
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s;
   }
 
   button:hover:not(:disabled) {
-    background-color: #0056b3;
+    background-color: #1557b0;
   }
 
   button:disabled {
-    background-color: #ccc;
+    background-color: #dadce0;
+    color: #80868b;
     cursor: not-allowed;
   }
 
   .loading-packages {
     margin-top: 15px;
     padding: 15px;
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
-    color: #856404;
+    background: #f5f5f5;
+    border-left: 4px solid #1a73e8;
+    color: #5f6368;
     border-radius: 4px;
   }
 
@@ -226,18 +228,18 @@
   }
 
   .success {
-    color: #28a745;
+    color: #137333;
   }
 
   .failure {
-    color: #dc3545;
+    color: #c5221f;
   }
 
   .password-container {
     margin: 15px 0;
     padding: 20px;
-    background: #e7f3ff;
-    border: 2px solid #007bff;
+    background: #e6f4ea;
+    border: 2px solid #137333;
     border-radius: 8px;
   }
 
@@ -265,10 +267,10 @@
     font-family: 'Courier New', 'Consolas', monospace;
     font-size: 18px;
     font-weight: bold;
-    color: #007bff;
+    color: #137333;
     padding: 12px 16px;
     background: white;
-    border: 3px solid #007bff;
+    border: 2px solid #137333;
     border-radius: 6px;
     display: inline-block;
     letter-spacing: 1px;
@@ -282,7 +284,7 @@
   }
 
   .copy-button {
-    background-color: #28a745;
+    background-color: #137333;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -290,15 +292,15 @@
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
     min-width: 140px;
   }
 
   .copy-button:hover {
-    background-color: #218838;
+    background-color: #0d5525;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 2px 8px rgba(19, 115, 51, 0.3);
   }
 
   .copy-button:active {
@@ -306,12 +308,12 @@
   }
 
   .copy-button.success {
-    background-color: #155724;
+    background-color: #0d5525;
     animation: pulse 0.5s ease;
   }
 
   .copy-button.error {
-    background-color: #dc3545;
+    background-color: #c5221f;
   }
 
   @keyframes pulse {
@@ -343,13 +345,13 @@
   }
 
   .test-case.passed {
-    background: #d4edda;
-    border-left: 4px solid #28a745;
+    background: #e6f4ea;
+    border-left: 4px solid #137333;
   }
 
   .test-case.failed {
-    background: #f8d7da;
-    border-left: 4px solid #dc3545;
+    background: #fce8e6;
+    border-left: 4px solid #c5221f;
   }
 
   .test-info {
@@ -370,7 +372,9 @@
   }
 
   pre.error {
-    background: #ffe6e6;
-    color: #d8000c;
+    background: #fce8e6;
+    color: #c5221f;
+    border: 1px solid #c5221f;
+    font-weight: 500;
   }
 </style>
