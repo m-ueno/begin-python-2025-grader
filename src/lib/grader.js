@@ -1,6 +1,34 @@
 let pyodide = null;
 
 /**
+ * エラーメッセージから主要なエラー行を抽出
+ * @param {string} errorMessage - 完全なエラーメッセージ
+ * @returns {Object} - { summary: 主要エラー行, full: 完全なエラーメッセージ }
+ */
+export function extractErrorSummary(errorMessage) {
+  if (!errorMessage) {
+    return { summary: '', full: '' };
+  }
+
+  const lines = errorMessage.split('\n');
+
+  // 最後の非空行を取得（通常はここにSyntaxError等のメインエラーがある）
+  let summaryLine = '';
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const line = lines[i].trim();
+    if (line) {
+      summaryLine = line;
+      break;
+    }
+  }
+
+  return {
+    summary: summaryLine,
+    full: errorMessage
+  };
+}
+
+/**
  * Pyodideを初期化
  */
 export async function initPyodide() {

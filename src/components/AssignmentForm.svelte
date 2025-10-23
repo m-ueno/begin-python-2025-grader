@@ -1,5 +1,5 @@
 <script>
-  import { runTests } from '../lib/grader.js';
+  import { runTests, extractErrorSummary } from '../lib/grader.js';
   import { generatePassword } from '../lib/password.js';
 
   let { assignment, lectureSlug } = $props();
@@ -142,9 +142,16 @@
                   <pre>{result.actual}</pre>
                 </div>
                 {#if result.error}
-                  <div>
-                    <strong>エラー:</strong>
-                    <pre class="error">{result.error}</pre>
+                  {@const errorInfo = extractErrorSummary(result.error)}
+                  <div class="error-section">
+                    <div class="error-summary">
+                      <strong>⚠️ エラー:</strong>
+                      <div class="error-main">{errorInfo.summary}</div>
+                    </div>
+                    <details class="error-details">
+                      <summary>詳細なエラー情報を表示</summary>
+                      <pre class="error-full">{errorInfo.full}</pre>
+                    </details>
                   </div>
                 {/if}
               </div>
@@ -369,6 +376,66 @@
     border-radius: 4px;
     overflow-x: auto;
     margin: 5px 0;
+  }
+
+  .error-section {
+    margin-top: 15px;
+    padding: 16px;
+    background: #fce8e6;
+    border: 2px solid #c5221f;
+    border-radius: 6px;
+  }
+
+  .error-summary {
+    margin-bottom: 12px;
+  }
+
+  .error-summary strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #c5221f;
+    font-size: 16px;
+  }
+
+  .error-main {
+    padding: 12px;
+    background: white;
+    border-left: 4px solid #c5221f;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: #c5221f;
+    line-height: 1.5;
+  }
+
+  .error-details {
+    margin-top: 12px;
+  }
+
+  .error-details summary {
+    cursor: pointer;
+    color: #5f6368;
+    font-size: 14px;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    user-select: none;
+  }
+
+  .error-details summary:hover {
+    background: #e8e8e8;
+  }
+
+  .error-full {
+    margin-top: 8px;
+    padding: 12px;
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #5f6368;
+    overflow-x: auto;
+    line-height: 1.4;
   }
 
   pre.error {
