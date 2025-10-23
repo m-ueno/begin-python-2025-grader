@@ -3,17 +3,6 @@ slug: 06-loops
 title: 繰り返し
 
 assignments:
-  - id: train1
-    title: 練習1(1)
-    tests:
-      - preCode: "data = ['H', 'e', 'l', 'l', 'o']"
-        expected: |
-          H
-          e
-          l
-          l
-          o
-
   - id: fizzbuzz
     title: 課題1：FizzBuzz
     tests:
@@ -52,7 +41,7 @@ assignments:
           FizzBuzz
 
   - id: collatz
-    title: 課題2：コラッツ予想
+    title: "課題2：コラッツ予想（注意：v = 12 の行は入力しないこと）"
     tests:
       - preCode: "v = 12"
         postCode: ""
