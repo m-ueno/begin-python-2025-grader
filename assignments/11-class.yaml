@@ -1,0 +1,59 @@
+lectureNumber: 11
+slug: 11-class
+title: クラス、オブジェクト
+
+assignments:
+  - id: fraction-multiply
+    title: 分数クラスに掛け算メソッドを追加（注意：Fractionクラス全体を提出すること）
+    tests:
+      - postCode: |
+          x = Fraction(1, 3)
+          y = Fraction(1, 5)
+          print(x.mul(y))
+        expected: "1/15"
+      - postCode: |
+          x = Fraction(2, 3)
+          y = Fraction(3, 4)
+          print(x.mul(y))
+        expected: "6/12"
+      - postCode: |
+          x = Fraction(1, 10)
+          y = Fraction(3, 1)
+          print(x.mul(y))
+        expected: "3/10"
+
+  - id: fraction-reduced
+    title: 分数クラスを既約分数にする（注意：Fractionクラス全体を提出すること）
+    tests:
+      - preCode: |
+          import math
+          from math import gcd
+        postCode: |
+          x = Fraction(2, 4)
+          print(x)
+        expected: "1/2"
+      - preCode: |
+          import math
+          from math import gcd
+        postCode: |
+          x = Fraction(6, 9)
+          print(x)
+        expected: "2/3"
+      - preCode: |
+          import math
+          from math import gcd
+        postCode: |
+          x = Fraction(1, 10)
+          y = Fraction(3, 1)
+          z = x.mul(y)
+          print(z)
+        expected: "3/10"
+      - preCode: |
+          import math
+          from math import gcd
+        postCode: |
+          x = Fraction(2, 3)
+          y = Fraction(3, 4)
+          z = x.mul(y)
+          print(z)
+        expected: "1/2"
