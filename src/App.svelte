@@ -5,7 +5,6 @@
 
   let lectures = $state([]);
   let currentLecture = $state(null);
-  let showLectureList = $state(false);
   let isLoading = $state(true);
   let pyodideReady = $state(false);
 
@@ -21,10 +20,8 @@
       const path = window.location.pathname;
       const pathParts = path.replace(BASE_PATH, '').split('/').filter(Boolean);
 
-      // トップページまたは/lecturesの場合は講義一覧を表示
-      if (pathParts.length === 0 || pathParts[0] === 'lectures') {
-        showLectureList = true;
-      } else {
+      // 特定の講義ページの場合のみcurrentLectureを設定
+      if (pathParts.length > 0 && pathParts[0] !== 'lectures') {
         const slug = pathParts[pathParts.length - 1];
         currentLecture = lectures.find(l => l.slug === slug);
       }
@@ -50,7 +47,7 @@
       <h1>Python自動採点システム</h1>
     </header>
     <div class="loading">読み込み中...</div>
-  {:else if showLectureList}
+  {:else if !currentLecture}
     <header class="header-narrow">
       <h1>Python自動採点システム</h1>
     </header>
@@ -66,11 +63,6 @@
         {/each}
       </ul>
     </section>
-  {:else if !currentLecture}
-    <header>
-      <h1>Python自動採点システム</h1>
-    </header>
-    <div class="error">講義が見つかりません。</div>
   {:else}
     <header>
       <h1>Python自動採点システム</h1>
