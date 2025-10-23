@@ -9,15 +9,17 @@
   let isLoading = $state(true);
   let pyodideReady = $state(false);
 
+  const BASE_PATH = '/begin-python-2025-grader';
+
   onMount(async () => {
     // 講義データを読み込み（ビルド時に生成されたJSON）
     try {
-      const response = await fetch('/assignments.json');
+      const response = await fetch(`${BASE_PATH}/assignments.json`);
       lectures = await response.json();
 
       // URLから講義slugを取得
       const path = window.location.pathname;
-      const pathParts = path.split('/').filter(Boolean);
+      const pathParts = path.replace(BASE_PATH, '').split('/').filter(Boolean);
 
       // トップページまたは/lecturesの場合は講義一覧を表示
       if (pathParts.length === 0 || pathParts[0] === 'lectures') {
@@ -40,11 +42,6 @@
       console.error('Failed to initialize Pyodide:', error);
     }
   });
-
-  function navigateToLecture(slug) {
-    window.history.pushState({}, '', `/${slug}`);
-    currentLecture = lectures.find(l => l.slug === slug);
-  }
 </script>
 
 <main>
@@ -62,7 +59,7 @@
       <ul>
         {#each lectures as lecture}
           <li>
-            <a href="/{lecture.slug}">
+            <a href="{BASE_PATH}/{lecture.slug}">
               第{lecture.lectureNumber}回: {lecture.title}
             </a>
           </li>
