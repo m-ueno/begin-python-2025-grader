@@ -72,7 +72,7 @@ git push origin main
 ## よくある質問
 
 **Q: パスワードはどのように生成されますか？**
-A: パスワードは各assignmentの `lectureSlug` と `assignmentId` から決定的に生成されます（30文字、大文字小文字数字記号を含む）。同じslugからは常に同じパスワードが生成されます。
+A: パスワードは各assignmentの `lectureSlug` と `assignmentId` から決定的に生成されます（50文字、大文字小文字数字記号を含む）。同じslugからは常に同じパスワードが生成されます。
 
 **Q: 新しい課題を追加した**
 A: `npm run show-passwords` で新しい課題のパスワードを確認し、MOOCに登録してください。

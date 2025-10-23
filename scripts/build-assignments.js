@@ -2,12 +2,35 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
+import { z } from 'zod';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const assignmentsDir = path.join(__dirname, '../assignments');
 const outputPath = path.join(__dirname, '../public/assignments.json');
+
+// スキーマ定義
+const TestSchema = z.object({
+  preCode: z.string().optional(),
+  preCodes: z.array(z.string()).optional(),
+  postCode: z.string().optional(),
+  expected: z.string()
+});
+
+const AssignmentSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  packages: z.array(z.string()).optional(),
+  tests: z.array(TestSchema).min(1)
+});
+
+const LectureSchema = z.object({
+  lectureNumber: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  assignments: z.array(AssignmentSchema).min(1)
+}).passthrough(); // アンカー用の_anchorsなど余分なフィールドを許可
 
 console.log('📚 Building assignments from YAML files...');
 
@@ -25,28 +48,38 @@ for (const file of yamlFiles) {
   try {
     const lecture = yaml.load(fileContent);
 
-    // 各課題のテストケースを検証
-    for (const assignment of lecture.assignments) {
-      if (!assignment.tests || assignment.tests.length === 0) {
-        console.warn(`⚠️  Warning: Assignment "${assignment.id}" in ${file} has no tests`);
-      }
+    // スキーマバリデーション
+    const validatedLecture = LectureSchema.parse(lecture);
 
-      // preCode, postCode, expectedが存在することを確認
+    // preCodesを処理
+    for (const assignment of validatedLecture.assignments) {
       for (const test of assignment.tests) {
+        // preCodesが配列の場合は結合してpreCodeに変換
+        if (test.preCodes && Array.isArray(test.preCodes)) {
+          test.preCode = test.preCodes.join('\n');
+          delete test.preCodes;
+        }
+        // デフォルト値設定
         if (test.preCode === undefined) test.preCode = '';
         if (test.postCode === undefined) test.postCode = '';
-        if (!test.expected) {
-          console.error(`❌ Error: Test in assignment "${assignment.id}" has no expected output`);
-          process.exit(1);
-        }
       }
     }
 
-    lectures.push(lecture);
-    console.log(`✅ Loaded: ${lecture.title} (${lecture.assignments.length} assignments)`);
+    // _anchorsなどの内部フィールドを削除
+    delete validatedLecture._anchors;
+
+    lectures.push(validatedLecture);
+    console.log(`✅ Loaded: ${validatedLecture.title} (${validatedLecture.assignments.length} assignments)`);
 
   } catch (error) {
-    console.error(`❌ Error parsing ${file}:`, error.message);
+    if (error instanceof z.ZodError) {
+      console.error(`❌ Schema validation error in ${file}:`);
+      error.errors.forEach(err => {
+        console.error(`  - ${err.path.join('.')}: ${err.message}`);
+      });
+    } else {
+      console.error(`❌ Error parsing ${file}:`, error.message);
+    }
     process.exit(1);
   }
 }

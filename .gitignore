@@ -1,8 +1,4 @@
 node_modules
 dist
 .DS_Store
-.encryption-key
-src/lib/password.generated.js
 public/assignments.json
-.env
-.env.local
