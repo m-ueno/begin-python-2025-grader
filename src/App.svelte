@@ -11,7 +11,7 @@
   onMount(async () => {
     // 講義データを読み込み（ビルド時に生成されたJSON）
     try {
-      const response = await fetch('/python-grader-client/assignments.json');
+      const response = await fetch('/assignments.json');
       lectures = await response.json();
 
       // URLから講義slugを取得
