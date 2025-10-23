@@ -118,6 +118,16 @@ sys.stderr = StringIO()
       errorMessage = String(error);
     }
 
+    // stdoutとstderrも取得を試みる（エラー発生前の出力をキャプチャ）
+    let actualOutput = '';
+    try {
+      const stdoutProxy = await pyodide.runPythonAsync('sys.stdout.getvalue()');
+      const stdout = String(stdoutProxy);
+      actualOutput = stdout.trim();
+    } catch (e) {
+      // stdout取得に失敗しても続行
+    }
+
     // stderrも取得を試みる
     try {
       const stderrProxy = await pyodide.runPythonAsync('sys.stderr.getvalue()');
@@ -132,7 +142,7 @@ sys.stderr = StringIO()
     return {
       passed: false,
       expected: test.expected.trim(),
-      actual: '',
+      actual: actualOutput,
       error: errorMessage || 'エラーが発生しました（詳細不明）'
     };
   }
