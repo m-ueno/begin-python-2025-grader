@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate-passwords && npm run build-assignments && vite build",
+    "build": "npm run build-assignments && vite build",
     "preview": "vite preview",
     "build-assignments": "node scripts/build-assignments.js",
     "show-passwords": "node scripts/show-passwords.js"
