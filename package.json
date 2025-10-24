@@ -15,8 +15,5 @@
     "svelte": "^5.41.2",
     "vite": "^7.1.11",
     "zod": "^4.1.12"
-  },
-  "dependencies": {
-    "crypto-js": "^4.2.0"
   }
 }

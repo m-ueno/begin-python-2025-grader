@@ -1,6 +1,6 @@
 <script>
   import { runTests, extractErrorSummary } from '../lib/grader.js';
-  import { generatePassword } from '../lib/password.js';
+  import { generatePassword } from '../../shared/password-algorithm.js';
 
   let { assignment, lectureSlug } = $props();
 
@@ -45,7 +45,7 @@
       testResults = results;
 
       if (results.allPassed) {
-        password = generatePassword(lectureSlug, assignment.id, true);
+        password = await generatePassword(lectureSlug, assignment.id);
       }
     } catch (error) {
       testResults = {
