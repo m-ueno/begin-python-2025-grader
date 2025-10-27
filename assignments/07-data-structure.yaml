@@ -34,7 +34,7 @@ _anchors:
 
 assignments:
   - id: alice-count
-    title: '課題1: "Alice" の出現回数'
+    title: '課題1: "Alice" の出現回数（注意：alice変数は既に用意されています。ノートブックにあるalice変数の代入行は入力不要です）'
     packages: ["nltk"]
     tests:
       - preCodes:
@@ -43,7 +43,7 @@ assignments:
           396
 
   - id: alice-char-count
-    title: '課題2: 特定のアルファベットの出現回数'
+    title: '課題2: 特定のアルファベットの出現回数（注意：alice, char変数は既に用意されています。ノートブックにある代入行は不要です）'
     packages: ["nltk"]
     tests:
       - preCodes:
@@ -60,7 +60,7 @@ assignments:
           1476
 
   - id: alice-frequency
-    title: '課題3: アルファベット出現頻度トップ10'
+    title: '課題3: アルファベット出現頻度トップ10（注意：alice変数は既に用意されています。ノートブックにあるalice変数の代入行は不要です）'
     packages: ["nltk"]
     tests:
       - preCodes:
