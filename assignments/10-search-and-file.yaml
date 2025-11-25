@@ -5,6 +5,7 @@ title: 検索とファイル操作
 assignments:
   - id: std-deviation-to-file
     title: スコアの標準偏差を求めてファイルに出力
+    packages: ["numpy"]
     tests:
       - preCode: |
           import os

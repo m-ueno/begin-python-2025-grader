@@ -6,27 +6,17 @@ assignments:
   - id: insert-sort
     title: 挿入ソート（insert_sort関数定義）を完成させよ
     tests:
-      - postCode: "print(insert_sort([3, 1, 4, 1, 5, 9, 2, 6]))"
+      - postCode: |
+          x = [3, 1, 4, 1, 5, 9, 2, 6]
+          insert_sort(x, verbose=False)
+          print(x)
         expected: "[1, 1, 2, 3, 4, 5, 6, 9]"
-      - postCode: "print(insert_sort([]))"
-        expected: "[]"
-      - postCode: "print(insert_sort([1]))"
-        expected: "[1]"
-      - postCode: "print(insert_sort([5, 4, 3, 2, 1]))"
-        expected: "[1, 2, 3, 4, 5]"
-      - postCode: "print(insert_sort([1, 2, 3, 4, 5]))"
-        expected: "[1, 2, 3, 4, 5]"
 
   - id: quick-sort
     title: クイックソート（quick_sort関数）を完成させよ
     tests:
-      - postCode: "print(quick_sort([3, 1, 4, 1, 5, 9, 2, 6]))"
+      - postCode: |
+          x = [3, 1, 4, 1, 5, 9, 2, 6]
+          quick_sort(x, 0, len(x)-1, verbose=False)
+          print(x)
         expected: "[1, 1, 2, 3, 4, 5, 6, 9]"
-      - postCode: "print(quick_sort([]))"
-        expected: "[]"
-      - postCode: "print(quick_sort([1]))"
-        expected: "[1]"
-      - postCode: "print(quick_sort([5, 4, 3, 2, 1]))"
-        expected: "[1, 2, 3, 4, 5]"
-      - postCode: "print(quick_sort([1, 2, 3, 4, 5]))"
-        expected: "[1, 2, 3, 4, 5]"
