@@ -28,18 +28,25 @@ assignments:
         postCode: |
           # sample_std.txtの内容を読み込んで出力（四捨五入なしバージョンも許容）
           import os
-          with open('/content/drive/MyDrive/sample_std.txt') as f:
+          target_path = '/content/drive/MyDrive/sample_std.txt'
+          assert os.path.exists(target_path), f"File `{target_path}` does not exist."
+
+          with open(target_path)as f:
               lines = f.readlines()
 
           # 各行の数値を読み取る
           import numpy as np
-          expected_data = [[8, 7, 9, 6, 9], [4, 5, 8, 7, 6], [9, 9, 9, 8, 9], [6, 7, 9, 7, 8]]
+          expected_data = [1.17, 1.41, 0.4, 1.02]
 
+          count = 0
           for i, line in enumerate(lines):
-              value = float(line.strip())
-              actual_std = np.std(expected_data[i])
+              count += 1
+              actual = float(line.strip())
+              expect = expected_data[i]
               # 許容範囲: 0.01以内
-              assert abs(value - actual_std) < 0.01, f"Line {i+1}: expected around {actual_std}, got {value}"
+              assert abs(actual - expect) < 0.01, f"Line {i+1}: got {actual}, but want {expect}"
+
+          assert count == 4, f"There should be 4 lines in the output file, but actually got {count} lines."
 
           print("OK")
         expected: "OK"
