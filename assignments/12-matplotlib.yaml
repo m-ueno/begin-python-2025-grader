@@ -1,0 +1,48 @@
+lectureNumber: 12
+slug: 12-matplotlib
+title: データの可視化
+
+_preCode: &preCode |
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  import seaborn as sns
+  df = sns.load_dataset("diamonds")
+  fig, ax = plt.subplots(figsize=(5, 4))
+  x = df["carat"].values
+  y = df["price"].values
+
+assignments:
+  - id: diamonds-scatter
+    title: diamondsデータセットのcaratとpriceの関係を散布図で可視化
+    packages: ["seaborn", "matplotlib", "pandas"]
+    tests:
+      - preCode: *preCode
+        postCode: |
+          # テスト: 散布図が描画されていること
+          assert len(ax.collections) > 0, "散布図が描画されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: x軸ラベルが正しく設定されていること
+          assert ax.get_xlabel() == "カラット", f"x軸ラベルが正しくありません: 期待='カラット', 実際='{ax.get_xlabel()}'"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: y軸ラベルが正しく設定されていること
+          assert ax.get_ylabel() == "価格", f"y軸ラベルが正しくありません: 期待='価格', 実際='{ax.get_ylabel()}'"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: データ点数が正しいこと
+          scatter = ax.collections[0]
+          actual_count = scatter.get_offsets().shape[0]
+          expected_count = len(x)
+          assert actual_count == expected_count, f"データ点数が正しくありません: 期待={expected_count}, 実際={actual_count}"
+          print("OK")
+        expected: "OK"
