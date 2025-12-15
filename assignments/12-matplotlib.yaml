@@ -1,0 +1,57 @@
+lectureNumber: 12
+slug: 12-matplotlib
+title: データの可視化
+
+_preCode: &preCode |
+  import matplotlib
+  matplotlib.use("agg")
+
+  import pyodide_http
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  from pyodide.http import open_url
+
+  pyodide_http.patch_all()
+
+  URL = "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/diamonds.csv"
+  df = pd.read_csv(URL)
+
+  fig, ax = plt.subplots(figsize=(5, 4))
+  x = df["carat"].values
+  y = df["price"].values
+
+assignments:
+  - id: diamonds-scatter
+    title: caratとpriceの散布図
+    packages: ["matplotlib", "pandas", "pyodide-http"]
+    tests:
+      - preCode: *preCode
+        postCode: |
+          # テスト: 散布図が描画されていること
+          assert len(ax.collections) > 0, "散布図が描画されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          xlabel = ax.get_xlabel()
+          assert xlabel and isinstance(xlabel, str) and xlabel.strip() != "", "x軸ラベルが設定されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          ylabel = ax.get_ylabel()
+          assert ylabel and isinstance(ylabel, str) and ylabel.strip() != "", "y軸ラベルが設定されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: データ点数が正しいこと
+          scatter = ax.collections[0]
+          actual_count = scatter.get_offsets().shape[0]
+          expected_count = len(x)
+          assert actual_count == expected_count, f"データ点数が正しくありません: 期待={expected_count}, 実際={actual_count}"
+          print("OK")
+        expected: "OK"
