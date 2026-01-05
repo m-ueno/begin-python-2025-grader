@@ -1,0 +1,50 @@
+lectureNumber: 13
+slug: 13-histogram
+title: ヒストグラムによるデータ分析
+
+_preCode: &preCode |
+  import numpy as np
+  import pandas as pd
+  import matplotlib
+  matplotlib.use("Agg")
+  import matplotlib.pyplot as plt
+  from pyodide.http import open_url
+
+  url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/diamonds.csv"
+
+  # Pyodideのopen_urlを使ってCSVを取得し、pandasで読み込む
+  df = pd.read_csv(open_url(url))
+
+  # プロットの入れ物の用意
+  fig, ax = plt.subplots(figsize=(7, 4))
+
+assignments:
+  - id: carat-log-histogram
+    title: カラットの対数変換ヒストグラム
+    packages: ["matplotlib", "pandas", "numpy"]
+    tests:
+      - preCode: *preCode
+        postCode: |
+          # テスト: ヒストグラムが描画されていること
+          from matplotlib.patches import Rectangle
+
+          rect_patches = [p for p in ax.patches if isinstance(p, Rectangle)]
+          assert len(rect_patches) > 0, "ヒストグラムのバーが描画されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: x軸ラベルが設定されていること（空でないこと）
+          xlabel = ax.get_xlabel()
+          assert xlabel != "", f"x軸ラベルが設定されていません"
+          print("OK")
+        expected: "OK"
+
+      - preCode: *preCode
+        postCode: |
+          # テスト: y軸ラベルが設定されていること（空でないこと）
+          ylabel = ax.get_ylabel()
+          assert ylabel != "", f"y軸ラベルが設定されていません"
+          print("OK")
+        expected: "OK"
