@@ -1,0 +1,58 @@
+lectureNumber: 14
+slug: 14-test
+title: 仕様とテスト
+
+assignments:
+  - id: grade
+    title: 課題1：点数を成績に変換
+    tests:
+      - postCode: print(calculate_grade(95))
+        expected: "A"
+      - postCode: print(calculate_grade(90))
+        expected: "A"
+      - postCode: print(calculate_grade(85))
+        expected: "B"
+      - postCode: print(calculate_grade(80))
+        expected: "B"
+      - postCode: print(calculate_grade(75))
+        expected: "C"
+      - postCode: print(calculate_grade(70))
+        expected: "C"
+      - postCode: print(calculate_grade(65))
+        expected: "D"
+      - postCode: print(calculate_grade(60))
+        expected: "D"
+      - postCode: print(calculate_grade(55))
+        expected: "F"
+      - postCode: print(calculate_grade(0))
+        expected: "F"
+      - postCode: print(calculate_grade(-1))
+        expected: "None"
+      - postCode: print(calculate_grade(101))
+        expected: "None"
+
+  - id: find-max
+    title: 課題2：最大値抽出
+    tests:
+      - postCode: print(find_max([1, 5, 3, 2]))
+        expected: "5"
+      - postCode: print(find_max([10]))
+        expected: "10"
+      - postCode: print(find_max([-1, -5, -3]))
+        expected: "-1"
+      - postCode: print(find_max([]))
+        expected: "None"
+
+  - id: sorted
+    title: 課題3：デバッグ
+    tests:
+    - postCode: print(is_sorted([1, 2, 3, 4]))
+      expected: "True"
+    - postCode: print(is_sorted([1, 2, 2, 3]))
+      expected: "True"
+    - postCode: print(is_sorted([1, 1, 1]))
+      expected: "True"
+    - postCode: print(is_sorted([3, 2, 1]))
+      expected: "False"
+    - postCode: print(is_sorted([]))
+      expected: "True"
